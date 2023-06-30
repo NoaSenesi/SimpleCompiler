@@ -1,0 +1,31 @@
+S = Statements;
+
+Statements = Statement Statements | ^;
+Block = Statement | { Statements };
+
+Statement = if ( Expression ) Block ElseBlock
+		  | while ( Expression ) Block
+		  | print Expression \;
+		  | println Expression \;
+		  | break \;
+		  | continue \;
+		  | Expression \;
+		  | \; ;
+ElseBlock = else Block | ^;
+
+Expression = Add;
+Add = Add + Sub | Sub;
+Sub = Sub - Mul | Mul;
+Mul = Mul * Div | Div;
+Div = Div / Mod | Mod;
+Mod = Mod % Parenthesis | Parenthesis;
+Parenthesis = ( Expression ) | Equals;
+Equals = Equals \=\= NotEquals | NotEquals;
+NotEquals = NotEquals !\= GreaterThan | GreaterThan;
+GreaterThan = GreaterThan > LessThan | LessThan;
+LessThan = LessThan < GreaterThanEquals | GreaterThanEquals;
+GreaterThanEquals = GreaterThanEquals >\= LessThanEquals | LessThanEquals;
+LessThanEquals = LessThanEquals <\= Not | Not;
+Not = ! Atom | Atom;
+Assign = identifier \= Expression | Atom;
+Atom = value | identifier;
