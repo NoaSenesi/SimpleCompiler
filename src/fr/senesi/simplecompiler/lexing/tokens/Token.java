@@ -12,6 +12,10 @@ public abstract class Token {
 
 	public abstract String getTerminalName();
 
+	public String toString() {
+		return getTerminalName() + " at " + line + ":" + column + " - " + value;
+	}
+
 	public int getLine() {
 		return line;
 	}

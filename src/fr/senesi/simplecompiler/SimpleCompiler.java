@@ -19,5 +19,6 @@ public class SimpleCompiler {
 		}
 
 		Tokenizer tokenizer = new Tokenizer(file);
+		System.out.println(tokenizer.getTokens());
 	}
 }
