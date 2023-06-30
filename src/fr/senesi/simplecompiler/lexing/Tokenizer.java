@@ -107,6 +107,8 @@ public class Tokenizer {
 				else tokens.add(new Keyword(line, column, type));
 
 				column += cursor - start + 1;
+
+				continue;
 			} else {
 				SpecialType type = SpecialType.match(String.valueOf(c));
 

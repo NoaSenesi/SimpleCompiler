@@ -22,6 +22,6 @@ public class SimpleCompiler {
 		Tokenizer tokenizer = new Tokenizer(file);
 		Parser parser = new Parser(tokenizer);
 
-		Output.parseTree(parser.getParseTree());
+		Output.parseTree(parser.getParseTree().toAST());
 	}
 }

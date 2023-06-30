@@ -3,16 +3,24 @@ S = Statements;
 Statements = Statement Statements | ^;
 Block = Statement | { Statements };
 
-Statement = if ( Expression ) Block ElseBlock
-		  | while ( Expression ) Block
-		  | print Expression \;
-		  | println Expression \;
-		  | break \;
-		  | continue \;
-		  | Expression \;
-		  | identifier \= Expression \;
-		  | \; ;
+Statement = IfStatement
+		  | WhileStatement
+		  | PrintStatement
+		  | BreakStatement
+		  | ContinueStatement
+		  | ExpressionStatement
+		  | Assignment
+		  | EmptyStatement;
+
+IfStatement = if ( Expression ) Block ElseBlock;
 ElseBlock = else Block | ^;
+PrintStatement = print Expression \; | println Expression \; ;
+WhileStatement = while ( Expression ) Block;
+BreakStatement = break \; ;
+ContinueStatement = continue \; ;
+ExpressionStatement = Expression \; ;
+Assignment = identifier \= Expression \; ;
+EmptyStatement = \; ;
 
 Expression = Add;
 Add = Add + Sub | Sub;

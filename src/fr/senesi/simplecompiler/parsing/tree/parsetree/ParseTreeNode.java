@@ -2,6 +2,8 @@ package fr.senesi.simplecompiler.parsing.tree.parsetree;
 
 import java.util.List;
 
+import fr.senesi.simplecompiler.lexing.tokens.Keyword.KeywordType;
+import fr.senesi.simplecompiler.lexing.tokens.Special.SpecialType;
 import fr.senesi.simplecompiler.parsing.tree.Node;
 
 public abstract class ParseTreeNode extends Node {
@@ -11,17 +13,76 @@ public abstract class ParseTreeNode extends Node {
 		super(children);
 	}
 
+	public ParseTreeNode() {
+		super();
+	}
+
+	protected void compact() {
+		for (int i = 0; i < getChildren().size(); i++) {
+			Node child = getChildren().get(i);
+
+			if (child instanceof NonTerminal) {
+				((NonTerminal) child).compact();
+			}
+
+			if (child.getChildren().size() == 1) {
+				getChildren().set(i, child.getChildren().get(0));
+			}
+		}
+	}
+
+	protected void simplify() {
+		for (int i = 0; i < getChildren().size(); i++) {
+			Node child = getChildren().get(i);
+
+			if (child instanceof Terminal) {
+				Terminal terminal = (Terminal) child;
+
+				if (SpecialType.match(terminal.getGrammarIdentification()) != null
+				 || KeywordType.match(terminal.getGrammarIdentification()) != null) {
+					getChildren().remove(i--);
+
+					continue;
+				}
+			}
+
+			if (child instanceof NonTerminal) {
+				NonTerminal nonTerminal = (NonTerminal) child;
+
+				if (nonTerminal.getChildren().size() == 0) {
+					if (nonTerminal.getGrammarIdentification().equals("ElseBlock")
+					|| nonTerminal.getGrammarIdentification().equals("Statements")) {
+						getChildren().remove(i--);
+
+						continue;
+					}
+				}
+
+				switch (getGrammarIdentification()) {
+					case "S":
+					case "Statements":
+					case "Block":
+					case "ElseBlock":
+						switch (nonTerminal.getGrammarIdentification()) {
+							case "Statements":
+							case "Block":
+								getChildren().addAll(i, nonTerminal.getChildren());
+								getChildren().remove(i + nonTerminal.getChildren().size());
+								break;
+						}
+
+						break;
+				}
+			}
+
+			if (child instanceof ParseTreeNode) ((ParseTreeNode) child).simplify();
+		}
+	}
+
 	public Node toAST() {
-		/*
-		program, statements, if, else, unless (if not), while, do while, for, first assignment, assignment, function, return, break, continue, commas, ternary
-		or, and, equals, not equals (equals not), lower than, greater than, lower than or equals (greater than not), greater than or equals (lower than not)
-		+, unary +, -, unary -, *, /, %, **, !
-		access, function call
+		compact();
+		simplify();
 
-		S, Block, Statement, CommaOrNothing, Comma, Expression, And, Equality, Relation, Assignment, AssignmentPrefix, Arrayable,
-		Addition, Substraction, Multiplication, Division, Modulo, Power, Unary, Ternary, Atom, Access, Accessible
-		*/
-
-		return null;
+		return this;
 	}
 }

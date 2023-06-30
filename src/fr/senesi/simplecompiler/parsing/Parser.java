@@ -77,7 +77,9 @@ public class Parser {
 	}
 
 	public ParseTreeNode getParseTree() {
-		if (parseTreeNode == null) buildParseTree();
+		if (parseTreeNode == null) {
+			buildParseTree();
+		}
 
 		return parseTreeNode;
 	}
