@@ -58,7 +58,8 @@ public abstract class PTNode extends Node {
 					}
 				} else while (nonTerminal.getGrammarIdentification().equals("Parenthesed")) {
 					getChildren().set(i, nonTerminal.getChildren().get(1));
-					nonTerminal = (NonTerminal) getChildren().get(i);
+					if (getChildren().get(i) instanceof NonTerminal) nonTerminal = (NonTerminal) getChildren().get(i);
+					else break;
 				}
 
 				switch (getGrammarIdentification()) {
@@ -111,7 +112,7 @@ public abstract class PTNode extends Node {
 	public void toAST() {
 		compact();
 		simplify();
-		removeDeadCode();
+		//removeDeadCode();
 
 		transform();
 	}
