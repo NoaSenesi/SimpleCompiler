@@ -18,7 +18,9 @@ public class Node {
 		return children;
 	}
 
-	public Node toAST() {
-		return this;
+	public void toAST() {
+		for (Node child : children) {
+			child.toAST();
+		}
 	}
 }

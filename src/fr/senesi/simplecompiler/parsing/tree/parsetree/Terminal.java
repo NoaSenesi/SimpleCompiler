@@ -2,7 +2,7 @@ package fr.senesi.simplecompiler.parsing.tree.parsetree;
 
 import fr.senesi.simplecompiler.lexing.tokens.Token;
 
-public class Terminal extends ParseTreeNode {
+public class Terminal extends PTNode {
 	private Token token;
 
 	public Terminal(Token token) {

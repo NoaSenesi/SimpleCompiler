@@ -6,14 +6,14 @@ import fr.senesi.simplecompiler.lexing.tokens.Keyword.KeywordType;
 import fr.senesi.simplecompiler.lexing.tokens.Special.SpecialType;
 import fr.senesi.simplecompiler.parsing.tree.Node;
 
-public abstract class ParseTreeNode extends Node {
+public abstract class PTNode extends Node {
 	public abstract String getGrammarIdentification();
 
-	public ParseTreeNode(List<Node> children) {
+	public PTNode(List<Node> children) {
 		super(children);
 	}
 
-	public ParseTreeNode() {
+	public PTNode() {
 		super();
 	}
 
@@ -56,6 +56,9 @@ public abstract class ParseTreeNode extends Node {
 
 						continue;
 					}
+				} else while (nonTerminal.getGrammarIdentification().equals("Parenthesed")) {
+					getChildren().set(i, nonTerminal.getChildren().get(1));
+					nonTerminal = (NonTerminal) getChildren().get(i);
 				}
 
 				switch (getGrammarIdentification()) {
@@ -75,14 +78,41 @@ public abstract class ParseTreeNode extends Node {
 				}
 			}
 
-			if (child instanceof ParseTreeNode) ((ParseTreeNode) child).simplify();
+			if (child instanceof PTNode) ((PTNode) child).simplify();
 		}
 	}
 
-	public Node toAST() {
+	protected void removeDeadCode() {
+		for (int i = 0; i < getChildren().size(); i++) {
+			Node child = getChildren().get(i);
+
+			if (child instanceof NonTerminal) {
+				NonTerminal nonTerminal = (NonTerminal) child;
+
+				if (nonTerminal.getGrammarIdentification().equals("BreakStatement")) {
+					for (int j = i + 1; j < getChildren().size(); j++) {
+						getChildren().remove(j--);
+					}
+
+					break;
+				}
+			}
+
+			if (child instanceof PTNode) ((PTNode) child).removeDeadCode();
+		}
+	}
+
+	private void transform() {
+		if (getGrammarIdentification().equals("S")) {
+
+		}
+	}
+
+	public void toAST() {
 		compact();
 		simplify();
+		removeDeadCode();
 
-		return this;
+		transform();
 	}
 }

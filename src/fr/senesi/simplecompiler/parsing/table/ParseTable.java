@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.senesi.simplecompiler.parsing.table.Action.ActionType;
-import fr.senesi.simplecompiler.parsing.tree.parsetree.ParseTreeNode;
+import fr.senesi.simplecompiler.parsing.tree.parsetree.PTNode;
 
 public class ParseTable {
 	private List<String> grammar;
@@ -55,7 +55,7 @@ public class ParseTable {
 		return new Action(ActionType.ERROR);
 	}
 
-	public Action getAction(int state, ParseTreeNode node) {
+	public Action getAction(int state, PTNode node) {
 		return getAction(state, node.getGrammarIdentification());
 	}
 

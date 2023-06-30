@@ -9,8 +9,9 @@ import fr.senesi.simplecompiler.parsing.table.Action;
 import fr.senesi.simplecompiler.parsing.table.Action.ActionType;
 import fr.senesi.simplecompiler.parsing.table.ParseTable;
 import fr.senesi.simplecompiler.parsing.tree.Node;
+import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.Program;
 import fr.senesi.simplecompiler.parsing.tree.parsetree.NonTerminal;
-import fr.senesi.simplecompiler.parsing.tree.parsetree.ParseTreeNode;
+import fr.senesi.simplecompiler.parsing.tree.parsetree.PTNode;
 import fr.senesi.simplecompiler.parsing.tree.parsetree.Terminal;
 
 public class Parser {
@@ -19,7 +20,7 @@ public class Parser {
 	private Stack<Node> parseTree;
 	private int cursor;
 	private ParseTable table;
-	private ParseTreeNode parseTreeNode;
+	private PTNode parseTreeNode;
 
 	public Parser(Tokenizer tokenizer) {
 		this.tokenizer = tokenizer;
@@ -36,7 +37,7 @@ public class Parser {
 	private void buildParseTree() {
 		stateStack.push(0);
 
-		ParseTreeNode peek = new Terminal(tokenizer.getTokens().get(cursor));
+		PTNode peek = new Terminal(tokenizer.getTokens().get(cursor));
 		Action action = table.getAction(stateStack.peek(), peek);
 
 		while (action.getActionType() != ActionType.ACCEPT) {
@@ -73,14 +74,16 @@ public class Parser {
 			action = table.getAction(stateStack.peek(), peek);
 		}
 
-		parseTreeNode = (ParseTreeNode) parseTree.peek();
+		parseTreeNode = (PTNode) parseTree.peek();
 	}
 
-	public ParseTreeNode getParseTree() {
+	public Node getAST() {
 		if (parseTreeNode == null) {
 			buildParseTree();
 		}
 
-		return parseTreeNode;
+		parseTreeNode.toAST();
+
+		return new Program(parseTreeNode.getChildren());
 	}
 }

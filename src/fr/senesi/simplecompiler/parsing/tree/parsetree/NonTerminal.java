@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.senesi.simplecompiler.parsing.tree.Node;
 
-public class NonTerminal extends ParseTreeNode {
+public class NonTerminal extends PTNode {
 	private String grammarIdentification;
 
 	public NonTerminal(String grammarIdentification, List<Node> children) {

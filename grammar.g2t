@@ -34,5 +34,7 @@ GreaterThan = GreaterThan > LessThan | LessThan;
 LessThan = LessThan < GreaterThanEquals | GreaterThanEquals;
 GreaterThanEquals = GreaterThanEquals >\= LessThanEquals | LessThanEquals;
 LessThanEquals = LessThanEquals <\= Unary | Unary;
-Unary = ( Expression ) | ! Unary | Atom;
+Unary = Parenthesed | Negate | Atom;
+Parenthesed = ( Expression );
+Negate = - Atom;
 Atom = value | identifier;
