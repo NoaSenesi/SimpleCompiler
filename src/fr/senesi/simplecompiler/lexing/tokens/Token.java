@@ -13,7 +13,7 @@ public abstract class Token {
 	public abstract String getTerminalName();
 
 	public String toString() {
-		return getTerminalName() + " at " + line + ":" + column + " - " + value;
+		return getTerminalName();
 	}
 
 	public int getLine() {

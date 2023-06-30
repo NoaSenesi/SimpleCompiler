@@ -10,6 +10,7 @@ Statement = if ( Expression ) Block ElseBlock
 		  | break \;
 		  | continue \;
 		  | Expression \;
+		  | identifier \= Expression \;
 		  | \; ;
 ElseBlock = else Block | ^;
 
@@ -18,16 +19,12 @@ Add = Add + Sub | Sub;
 Sub = Sub - Mul | Mul;
 Mul = Mul * Div | Div;
 Div = Div / Mod | Mod;
-Mod = Mod % Parenthesis | Parenthesis;
-Parenthesis = ( Expression ) | Equals;
+Mod = Mod % Equals | Equals;
 Equals = Equals \=\= NotEquals | NotEquals;
 NotEquals = NotEquals !\= GreaterThan | GreaterThan;
 GreaterThan = GreaterThan > LessThan | LessThan;
 LessThan = LessThan < GreaterThanEquals | GreaterThanEquals;
 GreaterThanEquals = GreaterThanEquals >\= LessThanEquals | LessThanEquals;
 LessThanEquals = LessThanEquals <\= Unary | Unary;
-Unary = Not | Negate | Atom;
-Not = ! Unary;
-Negate = - Unary;
-Assign = identifier \= Expression | Atom;
+Unary = ( Expression ) | ! Unary | Atom;
 Atom = value | identifier;

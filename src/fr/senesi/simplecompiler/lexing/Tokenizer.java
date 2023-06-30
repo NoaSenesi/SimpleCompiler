@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.senesi.simplecompiler.lexing.tokens.EOF;
 import fr.senesi.simplecompiler.lexing.tokens.Identifier;
 import fr.senesi.simplecompiler.lexing.tokens.Keyword;
 import fr.senesi.simplecompiler.lexing.tokens.Keyword.KeywordType;
@@ -67,6 +68,8 @@ public class Tokenizer {
 
 				tokens.add(new Value(line, column, stream.substring(start, cursor), isDecimal ? ValueType.DECIMAL : ValueType.INTEGER));
 				column += cursor - start + 1;
+
+				continue;
 			} else if (c == '"' || c == '\'') {
 				char quote = c;
 
@@ -76,7 +79,7 @@ public class Tokenizer {
 					if (stream.charAt(cursor) == '\\') cursor++;
 
 					if (stream.charAt(cursor) == '\n') {
-						System.out.println("Warning: illegal line break at line " + line);
+						System.out.println("Error: illegal line break at line " + line);
 						System.exit(1);
 					}
 
@@ -122,6 +125,8 @@ public class Tokenizer {
 
 			cursor++;
 		}
+
+		tokens.add(new EOF(line, column));
 
 		return tokens;
 	}
