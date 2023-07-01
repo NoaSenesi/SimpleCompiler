@@ -1,12 +1,18 @@
 package fr.senesi.simplecompiler;
 
 import fr.senesi.simplecompiler.parsing.tree.Node;
+import fr.senesi.simplecompiler.parsing.tree.parsetree.PTNode;
 
 public class Output {
 	private static void tree(Node node, String indent, boolean first, boolean last) {
 		String marker = first ? "" : (last ? "└── " : "├── ");
 
-		System.out.print(indent + marker + node);
+		boolean italic = node instanceof PTNode;
+
+		System.out.print(indent + marker);
+		if (italic) System.out.print("\033[3m");
+		System.out.print(node);
+		if (italic) System.out.print("\033[0m");
 		System.out.println();
 
 		indent += first ? "" : (last ? "    " : "│   ");
