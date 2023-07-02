@@ -102,7 +102,6 @@ public abstract class PTNode extends Node {
 					case "S":
 					case "Statements":
 					case "Block":
-					case "ElseBlock":
 						switch (nonTerminal.getGrammarIdentification()) {
 							case "Statements":
 							case "Block":

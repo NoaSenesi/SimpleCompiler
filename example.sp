@@ -1,21 +1,19 @@
 a = (1 + 2 * 3 / -2 + 8) % 2;
 
-if (a == 1) print "ok";
+if (a == 0) println "a is zero";
 
 else {
-	print "nope " + a;
+	println "a is " + a;
 }
 
 if (1) {
-	print "simple ";
-	print "compiler";
+	print "Thank you for using";
+	print " Simple Compiler";
+} else {
+	print "Oops, dead code";
 }
 
 println "!" * 3;
-
-if (0) {
-	println "Dead code";
-}
 
 while (1) {
 	println "Finished";

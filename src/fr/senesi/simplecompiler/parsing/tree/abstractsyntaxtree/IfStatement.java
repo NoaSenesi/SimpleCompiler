@@ -21,17 +21,17 @@ public class IfStatement extends Statement {
 		return (ASTNode) getChildren().get(1);
 	}
 
-	public boolean hasWhileblock() {
+	public boolean hasElseBlock() {
 		return getChildren().size() > 2;
 	}
 
 	public ASTNode getElseBlock() {
-		return hasWhileblock() ? (ASTNode) getChildren().get(2) : null;
+		return hasElseBlock() ? (ASTNode) getChildren().get(2) : null;
 	}
 
 	public String generateCode() {
 		String ret = "if (" + getCondition().generateCode().replaceAll("^\\((.*)\\)$", "$1") + ") " + getBlock().generateCode();
-		if (hasWhileblock()) ret += "else " + getElseBlock().generateCode();
+		if (hasElseBlock()) ret += "else " + getElseBlock().generateCode();
 
 		return ret;
 	}

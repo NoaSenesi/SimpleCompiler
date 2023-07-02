@@ -2,6 +2,7 @@ package fr.senesi.simplecompiler.optimizing;
 
 import fr.senesi.simplecompiler.parsing.Parser;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.ASTNode;
+import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.Block;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.BreakStatement;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.ContinueStatement;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.Evaluation;
@@ -63,8 +64,16 @@ public class Optimizer {
 								  || e.getType() == EvaluationType.DECIMAL && (double) e.getValue() != 0
 								  || e.getType() == EvaluationType.STRING && ((String) e.getValue()).length() != 0;
 
-					if (passes) node.getChildren().set(i--, ifst.getBlock());
-					else if (ifst.hasWhileblock()) node.getChildren().set(i--, ifst.getElseBlock());
+					if (passes) {
+						node.getChildren().remove(i);
+						if (ifst.getBlock() instanceof Block) node.getChildren().addAll(i--, ifst.getBlock().getChildren());
+						else node.getChildren().add(i--, ifst.getBlock());
+					} else if (ifst.hasElseBlock()) {
+						node.getChildren().remove(i);
+						if (ifst.getElseBlock() instanceof Block) node.getChildren().addAll(i--, ifst.getElseBlock().getChildren());
+						else node.getChildren().add(i--, ifst.getElseBlock());
+					}
+
 					else node.getChildren().remove(i--);
 				}
 			}
