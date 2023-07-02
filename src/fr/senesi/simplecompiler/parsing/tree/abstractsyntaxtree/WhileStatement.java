@@ -13,7 +13,11 @@ public class WhileStatement extends Statement {
 		return (Expression) getChildren().get(0);
 	}
 
-	public Node getBlock() {
-		return getChildren().get(1);
+	public ASTNode getBlock() {
+		return (ASTNode) getChildren().get(1);
+	}
+
+	public String generateCode() {
+		return "while (" + getCondition().generateCode().replaceAll("^\\((.*\\))$", "$1") + ") " + getBlock().generateCode();
 	}
 }

@@ -38,4 +38,8 @@ public class Division extends BinaryExpression {
 		System.out.println("Error: division by zero");
 		System.exit(1);
 	}
+
+	public String generateCode() {
+		return "(" + getLeft().generateCode() + "/" + getRight().generateCode() + ")";
+	}
 }

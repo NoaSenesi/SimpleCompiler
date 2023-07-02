@@ -1,6 +1,9 @@
 package fr.senesi.simplecompiler;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import fr.senesi.simplecompiler.lexing.Tokenizer;
 import fr.senesi.simplecompiler.optimizing.Optimizer;
@@ -21,11 +24,20 @@ public class SimpleCompiler {
 		}
 
 		Tokenizer tokenizer = new Tokenizer(file);
+
 		Parser parser = new Parser(tokenizer);
+		
 		Optimizer optimizer = new Optimizer(parser);
 		optimizer.optimize();
 
+		String output = args[0].replaceAll("\\.([^.]*)$", ".out.$1");
 
-		Output.tree(optimizer.getAST());
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(output));
+			writer.write(optimizer.getAST().generateCode());
+			writer.close();
+		} catch (IOException e) {
+			System.out.println("Couldn't write in " + output + ": " + e.getMessage());
+		}
 	}
 }

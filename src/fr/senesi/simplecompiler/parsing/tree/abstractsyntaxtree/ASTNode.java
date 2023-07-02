@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.senesi.simplecompiler.parsing.tree.Node;
 
-public class ASTNode extends Node {
+public abstract class ASTNode extends Node {
 	public ASTNode(List<Node> children) {
 		super(children);
 	}
@@ -16,4 +16,6 @@ public class ASTNode extends Node {
 	public void toAST() {
 
 	}
+
+	public abstract String generateCode();
 }

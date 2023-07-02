@@ -6,4 +6,8 @@ public class ContinueStatement extends Statement {
 	public ContinueStatement() {
 		super(new ArrayList<>());
 	}
+
+	public String generateCode() {
+		return "continue;";
+	}
 }

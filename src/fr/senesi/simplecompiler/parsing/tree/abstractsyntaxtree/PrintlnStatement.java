@@ -10,4 +10,8 @@ public class PrintlnStatement extends ASTNode {
 	public Expression getExpression() {
 		return (Expression) getChildren().get(0);
 	}
+
+	public String generateCode() {
+		return "println " + getExpression().generateCode().replaceAll("^\\((.*)\\)$", "$1") + ";\n";
+	}
 }

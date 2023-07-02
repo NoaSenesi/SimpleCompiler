@@ -26,4 +26,8 @@ public class Assignment extends ASTNode {
 	public boolean isDeterministic() {
 		return getExpression().isDeterministic();
 	}
+
+	public String generateCode() {
+		return identifier.generateCode() + "=" + getExpression().generateCode().replaceAll("^\\((.*)\\)$", "$1") + ";\n";
+	}
 }

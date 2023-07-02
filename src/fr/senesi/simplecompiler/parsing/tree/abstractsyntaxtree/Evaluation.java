@@ -64,4 +64,12 @@ public class Evaluation extends Expression {
 		DECIMAL,
 		STRING
 	}
+
+	public String generateCode() {
+		if (type == EvaluationType.INTEGER) return String.valueOf((int) getValue());
+		if (type == EvaluationType.DECIMAL) return String.valueOf((double) getValue());
+		if (type == EvaluationType.STRING) return "\"" + (String) getValue() + "\"";
+
+		return "";
+	}
 }

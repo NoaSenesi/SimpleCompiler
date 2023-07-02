@@ -38,4 +38,8 @@ public class Modulo extends BinaryExpression {
 		System.out.println("Error: modulo by zero");
 		System.exit(1);
 	}
+
+	public String generateCode() {
+		return "(" + getLeft().generateCode() + "%" + getRight().generateCode() + ")";
+	}
 }

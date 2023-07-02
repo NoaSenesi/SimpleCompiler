@@ -36,4 +36,8 @@ public class Addition extends BinaryExpression {
 			}
 		}
 	}
+
+	public String generateCode() {
+		return "(" + getLeft().generateCode() + "+" + getRight().generateCode() + ")";
+	}
 }

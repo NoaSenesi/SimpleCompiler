@@ -38,4 +38,8 @@ public class Or extends BinaryExpression {
 
 		return null;
 	}
+
+	public String generateCode() {
+		return "(" + getLeft().generateCode() + "||" + getRight().generateCode() + ")";
+	}
 }

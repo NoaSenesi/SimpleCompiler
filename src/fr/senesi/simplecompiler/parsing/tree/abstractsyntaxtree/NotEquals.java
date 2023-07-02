@@ -33,4 +33,8 @@ public class NotEquals extends BinaryExpression {
 
 		return null;
 	}
+
+	public String generateCode() {
+		return "(" + getLeft().generateCode() + "!=" + getRight().generateCode() + ")";
+	}
 }

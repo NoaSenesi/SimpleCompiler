@@ -8,4 +8,12 @@ public class Block extends ASTNode {
 	public Block(List<Node> children) {
 		super(children);
 	}
+
+	public String generateCode() {
+		String ret = "{\n";
+		for (Node node : getChildren()) ret += ((ASTNode) node).generateCode();
+		ret += "\n}\n";
+
+		return ret;
+	}
 }

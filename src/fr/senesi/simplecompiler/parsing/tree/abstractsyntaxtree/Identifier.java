@@ -37,4 +37,8 @@ public class Identifier extends Expression {
 	public boolean isDeterministic() {
 		return false;
 	}
+
+	public String generateCode() {
+		return name;
+	}
 }

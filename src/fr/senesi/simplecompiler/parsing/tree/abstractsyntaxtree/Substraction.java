@@ -29,4 +29,8 @@ public class Substraction extends BinaryExpression {
 
 		return null;
 	}
+
+	public String generateCode() {
+		return "(" + getLeft().generateCode() + "-" + getRight().generateCode() + ")";
+	}
 }

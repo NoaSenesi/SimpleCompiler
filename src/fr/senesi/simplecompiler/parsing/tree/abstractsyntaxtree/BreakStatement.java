@@ -6,4 +6,8 @@ public class BreakStatement extends Statement {
 	public BreakStatement() {
 		super(new ArrayList<>());
 	}
+
+	public String generateCode() {
+		return "break;";
+	}
 }

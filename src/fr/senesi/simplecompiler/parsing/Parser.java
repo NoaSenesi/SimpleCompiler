@@ -83,6 +83,8 @@ public class Parser {
 			buildParseTree();
 		}
 
+		if (parseTreeNode == null) return null;
+
 		parseTreeNode.toAST();
 
 		return new Program(parseTreeNode.getChildren());

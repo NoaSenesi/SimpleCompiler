@@ -17,15 +17,22 @@ public class IfStatement extends Statement {
 		return (Expression) getChildren().get(0);
 	}
 
-	public Node getBlock() {
-		return getChildren().get(1);
+	public ASTNode getBlock() {
+		return (ASTNode) getChildren().get(1);
 	}
 
 	public boolean hasWhileblock() {
 		return getChildren().size() > 2;
 	}
 
-	public Node getElseBlock() {
-		return hasWhileblock() ? getChildren().get(2) : null;
+	public ASTNode getElseBlock() {
+		return hasWhileblock() ? (ASTNode) getChildren().get(2) : null;
+	}
+
+	public String generateCode() {
+		String ret = "if (" + getCondition().generateCode().replaceAll("^\\((.*)\\)$", "$1") + ") " + getBlock().generateCode();
+		if (hasWhileblock()) ret += "else " + getElseBlock().generateCode();
+
+		return ret;
 	}
 }

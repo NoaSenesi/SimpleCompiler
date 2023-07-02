@@ -21,4 +21,8 @@ public class UnaryMinus extends UnaryExpression {
 
 		return null;
 	}
+
+	public String generateCode() {
+		return "-" + getChild().generateCode();
+	}
 }
