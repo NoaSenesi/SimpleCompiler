@@ -2,3 +2,4 @@
 lib/
 bin/
 test/
+*.out.sp
