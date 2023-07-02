@@ -26,6 +26,7 @@ public class SimpleCompiler {
 		Tokenizer tokenizer = new Tokenizer(file);
 
 		Parser parser = new Parser(tokenizer);
+		if (parser.getAST() == null) return;
 
 		Optimizer optimizer = new Optimizer(parser);
 		optimizer.optimize();

@@ -18,8 +18,6 @@ public class Optimizer {
 	}
 
 	public void optimize() {
-		if (ast == null) return;
-
 		precalculate(ast);
 		removeDeadCode(ast);
 		removeConditionalBlocks(ast);

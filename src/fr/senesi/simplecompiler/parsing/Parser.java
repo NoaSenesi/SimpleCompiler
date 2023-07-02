@@ -22,6 +22,7 @@ public class Parser {
 	private int cursor;
 	private ParseTable table;
 	private PTNode parseTreeNode;
+	private boolean ast_generated = false;
 
 	public Parser(Tokenizer tokenizer) {
 		this.tokenizer = tokenizer;
@@ -85,7 +86,10 @@ public class Parser {
 
 		if (parseTreeNode == null) return null;
 
-		parseTreeNode.toAST();
+		if (!ast_generated) {
+			parseTreeNode.toAST();
+			ast_generated = true;
+		}
 
 		return new Program(parseTreeNode.getChildren());
 	}
