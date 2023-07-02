@@ -3,6 +3,7 @@ package fr.senesi.simplecompiler;
 import java.io.File;
 
 import fr.senesi.simplecompiler.lexing.Tokenizer;
+import fr.senesi.simplecompiler.optimizing.Optimizer;
 import fr.senesi.simplecompiler.parsing.Parser;
 
 public class SimpleCompiler {
@@ -21,8 +22,10 @@ public class SimpleCompiler {
 
 		Tokenizer tokenizer = new Tokenizer(file);
 		Parser parser = new Parser(tokenizer);
+		Optimizer optimizer = new Optimizer(parser);
+		optimizer.optimize();
 
 
-		Output.tree(parser.getAST());
+		Output.tree(optimizer.getAST());
 	}
 }

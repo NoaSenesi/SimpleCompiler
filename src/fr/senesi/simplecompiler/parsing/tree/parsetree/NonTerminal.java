@@ -16,6 +16,10 @@ public class NonTerminal extends PTNode {
 		return grammarIdentification;
 	}
 
+	public void setGrammarIdentification(String grammarIdentification) {
+		this.grammarIdentification = grammarIdentification;
+	}
+
 	public String toString() {
 		return grammarIdentification;
 	}

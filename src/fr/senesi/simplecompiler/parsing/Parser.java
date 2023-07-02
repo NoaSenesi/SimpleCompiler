@@ -9,6 +9,7 @@ import fr.senesi.simplecompiler.parsing.table.Action;
 import fr.senesi.simplecompiler.parsing.table.Action.ActionType;
 import fr.senesi.simplecompiler.parsing.table.ParseTable;
 import fr.senesi.simplecompiler.parsing.tree.Node;
+import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.ASTNode;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.Program;
 import fr.senesi.simplecompiler.parsing.tree.parsetree.NonTerminal;
 import fr.senesi.simplecompiler.parsing.tree.parsetree.PTNode;
@@ -77,7 +78,7 @@ public class Parser {
 		parseTreeNode = (PTNode) parseTree.peek();
 	}
 
-	public Node getAST() {
+	public ASTNode getAST() {
 		if (parseTreeNode == null) {
 			buildParseTree();
 		}

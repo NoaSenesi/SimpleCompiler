@@ -8,6 +8,11 @@ public class Assignment extends ASTNode {
 	public Assignment(Identifier identifier, Expression expression) {
 		super(Arrays.asList(expression));
 		this.identifier = identifier;
+
+		if (expression.isDeterministic()) {
+			identifier.setValue(expression.evaluate());
+			Identifier.IDENTIFIERS.put(identifier.getName(), identifier);
+		}
 	}
 
 	public Identifier getIdentifier() {

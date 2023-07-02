@@ -21,7 +21,11 @@ public class IfStatement extends Statement {
 		return getChildren().get(1);
 	}
 
+	public boolean hasWhileblock() {
+		return getChildren().size() > 2;
+	}
+
 	public Node getElseBlock() {
-		return getChildren().size() > 2 ? getChildren().get(2) : null;
+		return hasWhileblock() ? getChildren().get(2) : null;
 	}
 }

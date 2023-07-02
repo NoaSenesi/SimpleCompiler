@@ -76,6 +76,9 @@ public abstract class PTNode extends Node {
 			if (child instanceof NonTerminal) {
 				NonTerminal nonTerminal = (NonTerminal) child;
 
+				if (nonTerminal.getGrammarIdentification().equals("GreaterThan") && nonTerminal.getChildren().size() == 4) nonTerminal.setGrammarIdentification("GreaterThanEquals");
+				if (nonTerminal.getGrammarIdentification().equals("LowerThan") && nonTerminal.getChildren().size() == 4) nonTerminal.setGrammarIdentification("LowerThanEquals");
+
 				if (nonTerminal.getChildren().size() == 0) {
 					if (nonTerminal.getGrammarIdentification().equals("ElseBlock")
 					|| nonTerminal.getGrammarIdentification().equals("Statements")) {
@@ -107,26 +110,6 @@ public abstract class PTNode extends Node {
 			}
 
 			if (child instanceof PTNode) ((PTNode) child).simplify();
-		}
-	}
-
-	protected void removeDeadCode() {
-		for (int i = 0; i < getChildren().size(); i++) {
-			Node child = getChildren().get(i);
-
-			if (child instanceof NonTerminal) {
-				NonTerminal nonTerminal = (NonTerminal) child;
-
-				if (nonTerminal.getGrammarIdentification().equals("BreakStatement")) {
-					for (int j = i + 1; j < getChildren().size(); j++) {
-						getChildren().remove(j--);
-					}
-
-					break;
-				}
-			}
-
-			if (child instanceof PTNode) ((PTNode) child).removeDeadCode();
 		}
 	}
 
@@ -230,7 +213,6 @@ public abstract class PTNode extends Node {
 	public void toAST() {
 		compact();
 		simplify();
-		//removeDeadCode();
 
 		transform();
 	}

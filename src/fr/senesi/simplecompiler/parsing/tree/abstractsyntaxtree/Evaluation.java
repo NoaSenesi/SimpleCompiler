@@ -54,6 +54,10 @@ public class Evaluation extends Expression {
 		return null;
 	}
 
+	public boolean isDeterministic() {
+		return true;
+	}
+
 
 	public enum EvaluationType {
 		INTEGER,

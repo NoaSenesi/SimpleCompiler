@@ -36,8 +36,6 @@ public class Tokenizer {
 		int line = 1, column = 1, cursor = 0;
 		boolean lastError = false;
 
-		// {,},if,(,),while,print,;,println,break,continue,else,+,-,*,/,%,=,!,>,<,identifier,value
-
 		while (cursor < stream.length()) {
 			char c = stream.charAt(cursor);
 
@@ -46,7 +44,8 @@ public class Tokenizer {
 				column = 1;
 				lastError = false;
 			} else if (c == '\r') {
-
+				column++;
+				lastError = false;
 			} else if (c == ' ') {
 				column++;
 				lastError = false;
@@ -106,7 +105,7 @@ public class Tokenizer {
 				if (type == null) tokens.add(new Identifier(line, column, stream.substring(start, cursor)));
 				else tokens.add(new Keyword(line, column, type));
 
-				column += cursor - start + 1;
+				column += cursor - start;
 
 				continue;
 			} else {
