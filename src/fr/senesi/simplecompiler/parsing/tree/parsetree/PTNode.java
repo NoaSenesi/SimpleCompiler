@@ -78,6 +78,12 @@ public abstract class PTNode extends Node {
 
 				if (nonTerminal.getGrammarIdentification().equals("GreaterThan") && nonTerminal.getChildren().size() == 4) nonTerminal.setGrammarIdentification("GreaterThanEquals");
 				if (nonTerminal.getGrammarIdentification().equals("LowerThan") && nonTerminal.getChildren().size() == 4) nonTerminal.setGrammarIdentification("LowerThanEquals");
+				if (nonTerminal.getGrammarIdentification().equals("PrintStatement") && ((PTNode) nonTerminal.getChildren().get(0)).getGrammarIdentification().equals("println")) nonTerminal.setGrammarIdentification("PrintlnStatement");
+
+				if (nonTerminal.getGrammarIdentification().equals("ExpressionStatement")) {
+					getChildren().remove(i--);
+					continue;
+				}
 
 				if (nonTerminal.getChildren().size() == 0) {
 					if (nonTerminal.getGrammarIdentification().equals("ElseBlock")

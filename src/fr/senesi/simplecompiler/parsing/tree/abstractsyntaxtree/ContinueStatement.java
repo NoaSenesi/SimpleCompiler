@@ -8,6 +8,6 @@ public class ContinueStatement extends Statement {
 	}
 
 	public String generateCode() {
-		return "continue;";
+		return "continue;\n";
 	}
 }

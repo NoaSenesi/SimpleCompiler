@@ -12,7 +12,7 @@ public class Block extends ASTNode {
 	public String generateCode() {
 		String ret = "{\n";
 		for (Node node : getChildren()) ret += ((ASTNode) node).generateCode();
-		ret += "\n}\n";
+		ret += "}\n";
 
 		return ret;
 	}

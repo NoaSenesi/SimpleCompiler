@@ -11,7 +11,7 @@ import fr.senesi.simplecompiler.parsing.Parser;
 
 public class SimpleCompiler {
 	public static void main(String[] args) {
-		if (args.length != 1) {
+		if (args.length < 1) {
 			System.out.println("Usage: simple <file>");
 			System.exit(1);
 		}
@@ -30,6 +30,10 @@ public class SimpleCompiler {
 
 		Optimizer optimizer = new Optimizer(parser);
 		optimizer.optimize();
+
+		if (args.length >= 2 && args[1].equals("-t")) {
+			Output.tree(optimizer.getAST());
+		}
 
 		String output = args[0].replaceAll("\\.([^.]*)$", ".out.$1");
 

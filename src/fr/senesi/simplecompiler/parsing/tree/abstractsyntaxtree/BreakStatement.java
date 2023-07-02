@@ -8,6 +8,6 @@ public class BreakStatement extends Statement {
 	}
 
 	public String generateCode() {
-		return "break;";
+		return "break;\n";
 	}
 }

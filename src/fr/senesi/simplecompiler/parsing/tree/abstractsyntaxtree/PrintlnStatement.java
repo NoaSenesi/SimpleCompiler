@@ -2,7 +2,7 @@ package fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree;
 
 import java.util.Arrays;
 
-public class PrintlnStatement extends ASTNode {
+public class PrintlnStatement extends Statement {
 	public PrintlnStatement(Expression expression) {
 		super(Arrays.asList(expression));
 	}
