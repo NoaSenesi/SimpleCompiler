@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import fr.senesi.simplecompiler.parsing.tree.Node;
 
-public abstract class WhileStatement extends Statement {
+public class WhileStatement extends Statement {
 	public WhileStatement(Expression condition, Node block) {
 		super(Arrays.asList(condition, block));
 	}

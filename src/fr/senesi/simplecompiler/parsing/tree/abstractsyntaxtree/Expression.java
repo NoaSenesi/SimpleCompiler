@@ -2,7 +2,6 @@ package fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree;
 
 import java.util.List;
 
-import fr.senesi.simplecompiler.optimizing.Evaluation;
 import fr.senesi.simplecompiler.parsing.tree.Node;
 
 public abstract class Expression extends ASTNode {

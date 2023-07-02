@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import fr.senesi.simplecompiler.parsing.tree.Node;
 
-public abstract class IfStatement extends Statement {
+public class IfStatement extends Statement {
 	public IfStatement(Expression condition, Node block) {
 		super(Arrays.asList(condition, block));
 	}

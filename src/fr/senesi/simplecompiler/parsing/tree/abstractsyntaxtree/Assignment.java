@@ -3,14 +3,14 @@ package fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree;
 import java.util.Arrays;
 
 public class Assignment extends ASTNode {
-	private String identifier;
+	private Identifier identifier;
 
-	public Assignment(String identifier, Expression expression) {
+	public Assignment(Identifier identifier, Expression expression) {
 		super(Arrays.asList(expression));
 		this.identifier = identifier;
 	}
 
-	public String getIdentifier() {
+	public Identifier getIdentifier() {
 		return identifier;
 	}
 

@@ -1,7 +1,6 @@
 package fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree;
 
-import fr.senesi.simplecompiler.optimizing.Evaluation;
-import fr.senesi.simplecompiler.optimizing.Evaluation.EvaluationType;
+import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.Evaluation.EvaluationType;
 
 public class GreaterThan extends BinaryExpression {
 	public GreaterThan(Expression left, Expression right) {

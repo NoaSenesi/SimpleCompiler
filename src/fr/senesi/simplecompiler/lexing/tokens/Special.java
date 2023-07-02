@@ -30,7 +30,9 @@ public class Special extends Token {
 		EQUALS("="),
 		NOT("!"),
 		GREATER_THAN(">"),
-		LESS_THAN("<");
+		LESS_THAN("<"),
+		AMPERSAND("&"),
+		PIPELINE("|");
 
 		private String value;
 
