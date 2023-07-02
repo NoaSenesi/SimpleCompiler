@@ -13,18 +13,18 @@ public class Modulo extends BinaryExpression {
 		if (getLeft().evaluate().getType() == EvaluationType.INTEGER) {
 			if (getRight().evaluate().getType() == EvaluationType.INTEGER) {
 				if ((int) getRight().evaluate().getValue() == 0) divisionByZero();
-				return new Evaluation((int) getLeft().evaluate().getValue() * (int) getRight().evaluate().getValue());
+				return new Evaluation((int) getLeft().evaluate().getValue() % (int) getRight().evaluate().getValue());
 			} else if (getRight().evaluate().getType() == EvaluationType.DECIMAL) {
 				if ((double) getRight().evaluate().getValue() == 0) divisionByZero();
-				return new Evaluation((int) getLeft().evaluate().getValue() * (double) getRight().evaluate().getValue());
+				return new Evaluation((int) getLeft().evaluate().getValue() % (double) getRight().evaluate().getValue());
 			}
 		} else if (getLeft().evaluate().getType() == EvaluationType.DECIMAL) {
 			if (getRight().evaluate().getType() == EvaluationType.INTEGER) {
 				if ((int) getRight().evaluate().getValue() == 0) divisionByZero();
-				return new Evaluation((double) getLeft().evaluate().getValue() * (int) getRight().evaluate().getValue());
+				return new Evaluation((double) getLeft().evaluate().getValue() % (int) getRight().evaluate().getValue());
 			} else if (getRight().evaluate().getType() == EvaluationType.DECIMAL) {
 				if ((double) getRight().evaluate().getValue() == 0) divisionByZero();
-				return new Evaluation((double) getLeft().evaluate().getValue() * (double) getRight().evaluate().getValue());
+				return new Evaluation((double) getLeft().evaluate().getValue() % (double) getRight().evaluate().getValue());
 			}
 		}
 
