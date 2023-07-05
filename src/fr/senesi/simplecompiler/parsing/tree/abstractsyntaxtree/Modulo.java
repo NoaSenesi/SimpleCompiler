@@ -40,6 +40,6 @@ public class Modulo extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + "%" + getRight().generateCode() + ")";
+		return "modulo(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }

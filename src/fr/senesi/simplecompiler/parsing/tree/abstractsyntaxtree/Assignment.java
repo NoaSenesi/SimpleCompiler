@@ -28,6 +28,6 @@ public class Assignment extends ASTNode {
 	}
 
 	public String generateCode() {
-		return identifier.generateCode() + "=" + getExpression().generateCode().replaceAll("^\\((.*)\\)$", "$1") + ";\n";
+		return identifier.generateCode() + " = " + getExpression().generateCode() + ";\n";
 	}
 }

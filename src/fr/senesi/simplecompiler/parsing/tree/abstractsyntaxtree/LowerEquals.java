@@ -31,6 +31,6 @@ public class LowerEquals extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + "<=" + getRight().generateCode() + ")";
+		return "lower_equals(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }

@@ -31,6 +31,6 @@ public class LowerThan extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + "<" + getRight().generateCode() + ")";
+		return "lower_than(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }

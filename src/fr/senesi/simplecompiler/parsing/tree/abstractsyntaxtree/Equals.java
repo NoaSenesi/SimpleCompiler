@@ -35,6 +35,6 @@ public class Equals extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + "==" + getRight().generateCode() + ")";
+		return "equals(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }

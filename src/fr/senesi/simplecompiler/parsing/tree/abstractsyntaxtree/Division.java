@@ -40,6 +40,6 @@ public class Division extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + "/" + getRight().generateCode() + ")";
+		return "divide(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }

@@ -66,9 +66,9 @@ public class Evaluation extends Expression {
 	}
 
 	public String generateCode() {
-		if (type == EvaluationType.INTEGER) return String.valueOf((int) getValue());
-		if (type == EvaluationType.DECIMAL) return String.valueOf((double) getValue());
-		if (type == EvaluationType.STRING) return "\"" + (String) getValue() + "\"";
+		if (type == EvaluationType.INTEGER) return "new_integer(" + String.valueOf((int) getValue()) + ")";
+		if (type == EvaluationType.DECIMAL) return "new_decimal(" + String.valueOf((double) getValue()) + ")";
+		if (type == EvaluationType.STRING) return "new_string(\"" + (String) getValue() + "\")";
 
 		return "";
 	}

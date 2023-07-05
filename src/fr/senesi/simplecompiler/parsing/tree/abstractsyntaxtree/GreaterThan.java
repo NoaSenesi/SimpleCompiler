@@ -31,6 +31,6 @@ public class GreaterThan extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + ">" + getRight().generateCode() + ")";
+		return "greater_than(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }

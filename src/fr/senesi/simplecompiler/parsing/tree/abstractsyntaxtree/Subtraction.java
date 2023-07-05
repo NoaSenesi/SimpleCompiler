@@ -2,8 +2,8 @@ package fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree;
 
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.Evaluation.EvaluationType;
 
-public class Substraction extends BinaryExpression {
-	public Substraction(Expression left, Expression right) {
+public class Subtraction extends BinaryExpression {
+	public Subtraction(Expression left, Expression right) {
 		super(left, right);
 	}
 
@@ -31,6 +31,6 @@ public class Substraction extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + "-" + getRight().generateCode() + ")";
+		return "subtract(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }

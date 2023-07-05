@@ -40,6 +40,6 @@ public class Or extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + "||" + getRight().generateCode() + ")";
+		return "or(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }

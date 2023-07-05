@@ -1,10 +1,8 @@
 package fr.senesi.simplecompiler;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
+import fr.senesi.simplecompiler.codegen.CodeGen;
 import fr.senesi.simplecompiler.lexing.Tokenizer;
 import fr.senesi.simplecompiler.optimizing.Optimizer;
 import fr.senesi.simplecompiler.parsing.Parser;
@@ -35,14 +33,8 @@ public class SimpleCompiler {
 			Output.tree(optimizer.getAST());
 		}
 
-		String output = args[0].replaceAll("\\.([^.]*)$", ".out.$1");
+		String output = args[0].replaceAll("\\.([^.]*)$", ".out.c");
 
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(output));
-			writer.write(optimizer.getAST().generateCode());
-			writer.close();
-		} catch (IOException e) {
-			System.out.println("Couldn't write in " + output + ": " + e.getMessage());
-		}
+		CodeGen.generateCode(output, optimizer.getAST());
 	}
 }

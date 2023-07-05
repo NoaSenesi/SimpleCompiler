@@ -39,6 +39,6 @@ public class Identifier extends Expression {
 	}
 
 	public String generateCode() {
-		return name;
+		return "var_" + name;
 	}
 }

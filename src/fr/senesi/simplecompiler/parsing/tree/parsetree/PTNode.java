@@ -29,7 +29,7 @@ import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.NotEquals;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.Or;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.PrintStatement;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.PrintlnStatement;
-import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.Substraction;
+import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.Subtraction;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.UnaryMinus;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.WhileStatement;
 
@@ -189,7 +189,7 @@ public abstract class PTNode extends Node {
 					getChildren().set(i, new PrintlnStatement((Expression) pt.getChildren().get(0)));
 					break;
 				case "Sub":
-					getChildren().set(i, new Substraction((Expression) pt.getChildren().get(0), (Expression) pt.getChildren().get(1)));
+					getChildren().set(i, new Subtraction((Expression) pt.getChildren().get(0), (Expression) pt.getChildren().get(1)));
 					break;
 				case "WhileStatement":
 					getChildren().set(i, new WhileStatement((Expression) pt.getChildren().get(0), pt.getChildren().get(1)));

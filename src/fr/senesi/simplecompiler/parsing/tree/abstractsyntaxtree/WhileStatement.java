@@ -18,6 +18,6 @@ public class WhileStatement extends Statement {
 	}
 
 	public String generateCode() {
-		return "while (" + getCondition().generateCode().replaceAll("^\\((.*\\))$", "$1") + ") " + getBlock().generateCode();
+		return "while (is_true(" + getCondition().generateCode() + ")) " + getBlock().generateCode();
 	}
 }

@@ -31,6 +31,6 @@ public class GreaterEquals extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + ">=" + getRight().generateCode() + ")";
+		return "greater_equals(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }

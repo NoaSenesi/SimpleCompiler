@@ -38,6 +38,6 @@ public class Addition extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + "+" + getRight().generateCode() + ")";
+		return "add(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }

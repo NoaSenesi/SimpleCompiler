@@ -23,6 +23,6 @@ public class UnaryMinus extends UnaryExpression {
 	}
 
 	public String generateCode() {
-		return "-" + getChild().generateCode();
+		return "minus(" + getChild().generateCode() + ", stack)";
 	}
 }

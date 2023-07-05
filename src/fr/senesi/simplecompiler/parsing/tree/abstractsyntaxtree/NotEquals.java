@@ -35,6 +35,6 @@ public class NotEquals extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + "!=" + getRight().generateCode() + ")";
+		return "not_equals(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }

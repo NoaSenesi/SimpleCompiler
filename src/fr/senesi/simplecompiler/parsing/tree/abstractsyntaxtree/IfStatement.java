@@ -30,7 +30,7 @@ public class IfStatement extends Statement {
 	}
 
 	public String generateCode() {
-		String ret = "if (" + getCondition().generateCode().replaceAll("^\\((.*)\\)$", "$1") + ") " + getBlock().generateCode();
+		String ret = "if (is_true(" + getCondition().generateCode() + ")) " + getBlock().generateCode();
 		if (hasElseBlock()) ret += "else " + getElseBlock().generateCode();
 
 		return ret;

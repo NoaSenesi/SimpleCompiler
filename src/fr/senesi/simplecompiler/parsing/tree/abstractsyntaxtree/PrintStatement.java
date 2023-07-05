@@ -12,6 +12,6 @@ public class PrintStatement extends Statement {
 	}
 
 	public String generateCode() {
-		return "print " + getExpression().generateCode().replaceAll("^\\((.*)\\)$", "$1") + ";\n";
+		return "print(" + getExpression().generateCode() + ");\n";
 	}
 }

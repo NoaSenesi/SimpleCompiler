@@ -41,6 +41,6 @@ public class Multiplication extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + "*" + getRight().generateCode() + ")";
+		return "multiply(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }

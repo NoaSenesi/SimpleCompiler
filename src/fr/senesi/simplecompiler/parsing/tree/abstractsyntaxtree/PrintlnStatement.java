@@ -12,6 +12,6 @@ public class PrintlnStatement extends Statement {
 	}
 
 	public String generateCode() {
-		return "println " + getExpression().generateCode().replaceAll("^\\((.*)\\)$", "$1") + ";\n";
+		return "println(" + getExpression().generateCode() + ");\n";
 	}
 }

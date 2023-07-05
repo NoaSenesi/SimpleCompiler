@@ -40,6 +40,6 @@ public class And extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + "&&" + getRight().generateCode() + ")";
+		return "and(" + getLeft().generateCode() + ", " + getRight().generateCode() + ", stack)";
 	}
 }
