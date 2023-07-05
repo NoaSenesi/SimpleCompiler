@@ -32,6 +32,11 @@ public class Program extends ASTNode {
 			String name = ((Identifier) node).generateCode();
 			if (!list.contains(name)) list.add(name);
 		} else {
+			if (node instanceof Assignment) {
+				String name = ((Assignment) node).getIdentifier().generateCode();
+				if (!list.contains(name)) list.add(name);
+			}
+
 			for (Node child : node.getChildren()) getVariables((ASTNode) child, list);
 		}
 	}
