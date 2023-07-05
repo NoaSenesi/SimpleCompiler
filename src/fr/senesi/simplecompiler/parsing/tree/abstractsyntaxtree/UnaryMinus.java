@@ -1,5 +1,6 @@
 package fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree;
 
+import fr.senesi.simplecompiler.codegen.CodeGenUtils;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.Evaluation.EvaluationType;
 
 public class UnaryMinus extends UnaryExpression {
@@ -23,6 +24,18 @@ public class UnaryMinus extends UnaryExpression {
 	}
 
 	public String generateCode() {
-		return "-" + getChild().generateCode();
+		String child = getChild().generateCode();
+
+		if (!(getChild() instanceof ASTTerminal)) {
+			String code = child;
+			child = CodeGenUtils.generateVariableName();
+			CodeGenUtils.pushLine(child + " = " + code);
+		}
+
+		return "-" + child;
+	}
+
+	public String generateCode(String labelStart, String labelEnd) {
+		return generateCode();
 	}
 }

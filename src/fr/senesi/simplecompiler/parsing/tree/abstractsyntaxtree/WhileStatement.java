@@ -2,6 +2,7 @@ package fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree;
 
 import java.util.Arrays;
 
+import fr.senesi.simplecompiler.codegen.CodeGenUtils;
 import fr.senesi.simplecompiler.parsing.tree.Node;
 
 public class WhileStatement extends Statement {
@@ -18,6 +19,29 @@ public class WhileStatement extends Statement {
 	}
 
 	public String generateCode() {
-		return "while (" + getCondition().generateCode().replaceAll("^\\((.*\\))$", "$1") + ") " + getBlock().generateCode();
+		String labelStart = CodeGenUtils.generateLabelName(), labelEnd = CodeGenUtils.generateLabelName();
+		CodeGenUtils.pushLine(labelStart + ":");
+
+		String exp = getCondition().generateCode();
+
+		if (!(getCondition() instanceof ASTTerminal)) {
+			String code = exp;
+			exp = CodeGenUtils.generateVariableName();
+			CodeGenUtils.pushLine(exp + " = " + code);
+		}
+
+		CodeGenUtils.pushLine("compare " + exp + " 0");
+		CodeGenUtils.pushLine("gotoeq " + labelEnd);
+
+		getBlock().generateCode(labelStart, labelEnd);
+
+		CodeGenUtils.pushLine("goto " + labelStart);
+		CodeGenUtils.pushLine(labelEnd + ":");
+
+		return "";
+	}
+
+	public String generateCode(String labelStart, String labelEnd) {
+		return generateCode();
 	}
 }

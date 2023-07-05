@@ -2,6 +2,7 @@ package fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree;
 
 import java.util.Arrays;
 
+import fr.senesi.simplecompiler.codegen.CodeGenUtils;
 import fr.senesi.simplecompiler.parsing.tree.Node;
 
 public class IfStatement extends Statement {
@@ -30,9 +31,37 @@ public class IfStatement extends Statement {
 	}
 
 	public String generateCode() {
-		String ret = "if (" + getCondition().generateCode().replaceAll("^\\((.*)\\)$", "$1") + ") " + getBlock().generateCode();
-		if (hasElseBlock()) ret += "else " + getElseBlock().generateCode();
+		String exp = getCondition().generateCode();
 
-		return ret;
+		if (!(getCondition() instanceof ASTTerminal)) {
+			String code = exp;
+			exp = CodeGenUtils.generateVariableName();
+			CodeGenUtils.pushLine(exp + " = " + code);
+		}
+
+		CodeGenUtils.pushLine("compare " + exp + " 0");
+		String label = CodeGenUtils.generateLabelName(), label2 = null;
+		CodeGenUtils.pushLine("gotoeq " + label);
+
+		getBlock().generateCode();
+
+		if (hasElseBlock()) {
+			label2 = CodeGenUtils.generateLabelName();
+			CodeGenUtils.pushLine("goto " + label2);
+		}
+
+		CodeGenUtils.pushLine(label + ":");
+
+
+		if (hasElseBlock()) {
+			getElseBlock().generateCode();
+			CodeGenUtils.pushLine(label2 + ":");
+		}
+
+		return "";
+	}
+
+	public String generateCode(String labelStart, String labelEnd) {
+		return generateCode();
 	}
 }

@@ -10,10 +10,18 @@ public class Block extends ASTNode {
 	}
 
 	public String generateCode() {
-		String ret = "{\n";
-		for (Node node : getChildren()) ret += ((ASTNode) node).generateCode();
-		ret += "}\n";
+		for (Node child : getChildren()) {
+			((ASTNode) child).generateCode();
+		}
 
-		return ret;
+		return "";
+	}
+
+	public String generateCode(String labelStart, String labelEnd) {
+		for (Node child : getChildren()) {
+			((ASTNode) child).generateCode(labelStart, labelEnd);
+		}
+
+		return "";
 	}
 }

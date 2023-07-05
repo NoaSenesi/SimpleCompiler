@@ -2,6 +2,8 @@ package fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree;
 
 import java.util.Arrays;
 
+import fr.senesi.simplecompiler.codegen.CodeGenUtils;
+
 public class Assignment extends ASTNode {
 	private Identifier identifier;
 
@@ -28,6 +30,11 @@ public class Assignment extends ASTNode {
 	}
 
 	public String generateCode() {
-		return identifier.generateCode() + "=" + getExpression().generateCode().replaceAll("^\\((.*)\\)$", "$1") + ";\n";
+		CodeGenUtils.pushLine(identifier.generateCode() + " = " + getExpression().generateCode());
+		return "";
+	}
+
+	public String generateCode(String labelStart, String labelEnd) {
+		return generateCode();
 	}
 }

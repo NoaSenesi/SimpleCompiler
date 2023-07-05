@@ -1,5 +1,6 @@
 package fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree;
 
+import fr.senesi.simplecompiler.codegen.CodeGenUtils;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.Evaluation.EvaluationType;
 
 public class LowerThan extends BinaryExpression {
@@ -31,6 +32,25 @@ public class LowerThan extends BinaryExpression {
 	}
 
 	public String generateCode() {
-		return "(" + getLeft().generateCode() + "<" + getRight().generateCode() + ")";
+		String left = getLeft().generateCode();
+		String right = getRight().generateCode();
+
+		if (!(getLeft() instanceof ASTTerminal)) {
+			String code = left;
+			left = CodeGenUtils.generateVariableName();
+			CodeGenUtils.pushLine(left + " = " + code);
+		}
+
+		if (!(getRight() instanceof ASTTerminal)) {
+			String code = right;
+			right = CodeGenUtils.generateVariableName();
+			CodeGenUtils.pushLine(right + " = " + code);
+		}
+
+		return left + " < " + right;
+	}
+
+	public String generateCode(String labelStart, String labelEnd) {
+		return generateCode();
 	}
 }

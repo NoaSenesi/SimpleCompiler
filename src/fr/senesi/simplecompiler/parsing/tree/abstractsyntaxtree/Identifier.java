@@ -41,4 +41,8 @@ public class Identifier extends ASTTerminal {
 	public String generateCode() {
 		return name;
 	}
+
+	public String generateCode(String labelStart, String labelEnd) {
+		return generateCode();
+	}
 }

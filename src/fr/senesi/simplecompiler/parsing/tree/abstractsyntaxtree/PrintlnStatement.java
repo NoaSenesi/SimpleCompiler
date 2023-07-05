@@ -2,6 +2,8 @@ package fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree;
 
 import java.util.Arrays;
 
+import fr.senesi.simplecompiler.codegen.CodeGenUtils;
+
 public class PrintlnStatement extends Statement {
 	public PrintlnStatement(Expression expression) {
 		super(Arrays.asList(expression));
@@ -12,6 +14,20 @@ public class PrintlnStatement extends Statement {
 	}
 
 	public String generateCode() {
-		return "println " + getExpression().generateCode().replaceAll("^\\((.*)\\)$", "$1") + ";\n";
+		String exp = getExpression().generateCode();
+
+		if (!(getExpression() instanceof ASTTerminal)) {
+			String code = exp;
+			exp = CodeGenUtils.generateVariableName();
+			CodeGenUtils.pushLine(exp + " = " + code);
+		}
+
+		CodeGenUtils.pushLine("println " + exp);
+
+		return "";
+	}
+
+	public String generateCode(String labelStart, String labelEnd) {
+		return generateCode();
 	}
 }

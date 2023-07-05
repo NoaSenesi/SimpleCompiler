@@ -18,4 +18,5 @@ public abstract class ASTNode extends Node {
 	}
 
 	public abstract String generateCode();
+	public abstract String generateCode(String labelStart, String labelEnd);
 }

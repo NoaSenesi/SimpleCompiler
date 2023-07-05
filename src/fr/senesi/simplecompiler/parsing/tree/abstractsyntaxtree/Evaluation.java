@@ -72,4 +72,8 @@ public class Evaluation extends ASTTerminal {
 
 		return "";
 	}
+
+	public String generateCode(String labelStart, String labelEnd) {
+		return generateCode();
+	}
 }
