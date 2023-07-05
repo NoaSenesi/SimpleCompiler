@@ -1,6 +1,7 @@
 package fr.senesi.simplecompiler.codegen;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -8,7 +9,7 @@ import fr.senesi.simplecompiler.parsing.tree.Node;
 import fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree.ASTNode;
 
 public class CodeGen {
-	public static void generateCode(String output, ASTNode ast) {
+	public static void generateCode(String output, ASTNode ast, boolean showCode) {
 		String[] name = output.split("/");
 		name[name.length - 1] = "runtime." + name[name.length - 1];
 		String runtimePath = String.join("/", name), headerPath = runtimePath.replaceAll("c$", "h");
@@ -17,29 +18,53 @@ public class CodeGen {
 		generateCompiledCode(output, headerName, ast);
 		generateRuntime(runtimePath, headerName, ast);
 		generateHeader(headerPath, ast);
-		generateBuild(output, runtimeName);
+		String build = generateBuild(output, runtimeName);
+
+		if (!showCode) {
+			String path = output.lastIndexOf("/") <= 1 ? "" : output.substring(0, output.lastIndexOf("/")), buildFile = build.split("/")[build.split("/").length - 1];
+			String outputName = output.split("/")[output.split("/").length - 1];
+
+			try {
+				ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", "./" + buildFile + " && rm " + buildFile + " " + buildFile + ".bat " + runtimeName + " " + headerName + " " + outputName);
+				pb.directory(new File(System.getProperty("user.dir") + File.separator + path));
+				pb.inheritIO();
+				pb.start();
+			} catch (IOException e) {
+				try {
+					ProcessBuilder pb = new ProcessBuilder("cmd", "/c", buildFile + " && del " + buildFile + " " + buildFile + ".bat " + runtimeName + " " + headerName + " " + outputName);
+					pb.directory(new File(System.getProperty("user.dir") + File.separator + path));
+					pb.inheritIO();
+					pb.start();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
 	}
 
-	private static void generateBuild(String output, String runtimeName) {
+	private static String generateBuild(String output, String runtimeName) {
 		String outputName = output.split("/")[output.split("/").length - 1].split("\\.")[0];
+		String build = output.substring(0, output.length() - 6) + "Build";
 
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(output.substring(0, output.length() - 6) + "Build"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(build));
 			writer.write("#!/bin/sh\n\n");
 			writer.write("gcc -o " + outputName + " " + outputName + ".out.c " + runtimeName + "\n");
 			writer.close();
 
 			try {
-				Runtime.getRuntime().exec(new String[] {"chmod", "+x", output.substring(0, output.length() - 6) + "Build"});
+				Runtime.getRuntime().exec(new String[] {"chmod", "+x", build});
 			} catch (Exception e) {}
 
-			writer = new BufferedWriter(new FileWriter(output.substring(0, output.length() - 6) + "Build.bat"));
+			writer = new BufferedWriter(new FileWriter(build + ".bat"));
 			writer.write("@echo off\n\n");
 			writer.write("gcc -o " + outputName + ".exe " + outputName + ".out.c " + runtimeName + "\n");
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		return build;
 	}
 
 	private static void generateCompiledCode(String output, String headerName, ASTNode ast) {
@@ -88,7 +113,7 @@ public class CodeGen {
 
 			if (print) {
 				writer.write("void print(evaluation eval) {\n");
-				writer.write("	if (eval.type == INTEGER) printf(\"%d\", eval.integer);\n");
+				writer.write("	if (eval.type == INTEGER) printf(\"%ld\", eval.integer);\n");
 				writer.write("	if (eval.type == DECIMAL) printf(\"%f\", eval.decimal);\n");
 				writer.write("	if (eval.type == STRING) printf(\"%s\", eval.string);\n");
 				writer.write("}\n\n");
@@ -96,7 +121,7 @@ public class CodeGen {
 
 			if (println) {
 				writer.write("void println(evaluation eval) {\n");
-				writer.write("	if (eval.type == INTEGER) printf(\"%d\\n\", eval.integer);\n");
+				writer.write("	if (eval.type == INTEGER) printf(\"%ld\\n\", eval.integer);\n");
 				writer.write("	if (eval.type == DECIMAL) printf(\"%f\\n\", eval.decimal);\n");
 				writer.write("	if (eval.type == STRING) printf(\"%s\\n\", eval.string);\n");
 				writer.write("}\n\n");
@@ -122,7 +147,7 @@ public class CodeGen {
 			writer.write("	free(stack);\n");
 			writer.write("}\n\n");
 
-			writer.write("evaluation new_integer(int integer) {\n");
+			writer.write("evaluation new_integer(long integer) {\n");
 			writer.write("	return (evaluation) { .type = INTEGER, .integer = integer };\n");
 			writer.write("}\n\n");
 			writer.write("evaluation new_decimal(double decimal) {\n");
@@ -144,7 +169,7 @@ public class CodeGen {
 				writer.write("				case DECIMAL:\n");
 				writer.write("					return new_decimal(a.integer + b.decimal);\n");
 				writer.write("				case STRING:\n");
-				writer.write("					sprintf(number, \"%d\", a.integer);\n\n");
+				writer.write("					sprintf(number, \"%ld\", a.integer);\n\n");
 				writer.write("					result = malloc(strlen(number) + strlen(b.string) + 1);\n");
 				writer.write("					strcpy(result, number);\n");
 				writer.write("					strcat(result, b.string);\n\n");
@@ -168,7 +193,7 @@ public class CodeGen {
 				writer.write("		case STRING:\n");
 				writer.write("			switch (b.type) {\n");
 				writer.write("				case INTEGER:\n");
-				writer.write("					sprintf(number, \"%d\", b.integer);\n\n");
+				writer.write("					sprintf(number, \"%ld\", b.integer);\n\n");
 				writer.write("					result = malloc(strlen(a.string) + strlen(number) + 1);\n");
 				writer.write("					strcpy(result, a.string);\n");
 				writer.write("					strcat(result, number);\n\n");
@@ -511,7 +536,7 @@ public class CodeGen {
 			writer.write("	STRING\n");
 			writer.write("} evaluation_type;\n\n");
 			writer.write("typedef struct {\n");
-			writer.write("	int integer;\n");
+			writer.write("	long integer;\n");
 			writer.write("	double decimal;\n");
 			writer.write("	char* string;\n");
 			writer.write("	evaluation_type type;\n");
@@ -527,7 +552,7 @@ public class CodeGen {
 			writer.write("free_string_stack *new_free_string_stack();\n");
 			if (add || mul) writer.write("void push_free_string_stack(free_string_stack *stack, char *val);\n");
 			writer.write("void free_all(free_string_stack *stack);\n\n");
-			writer.write("evaluation new_integer(int integer);\n");
+			writer.write("evaluation new_integer(long integer);\n");
 			writer.write("evaluation new_decimal(double decimal);\n");
 			writer.write("evaluation new_string(char *string);\n\n");
 			if (print) writer.write("void print(evaluation eval);\n");

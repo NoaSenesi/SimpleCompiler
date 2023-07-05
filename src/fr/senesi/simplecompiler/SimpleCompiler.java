@@ -14,6 +14,13 @@ public class SimpleCompiler {
 			System.exit(1);
 		}
 
+		boolean showTree = false, showCode = false;
+
+		for (int i = 1; i < args.length; i++) {
+			if (args[i].equals("-t")) showTree = true;
+			if (args[i].equals("-c")) showCode = true;
+		}
+
 		File file = new File(args[0]);
 
 		if (!file.exists()) {
@@ -29,12 +36,10 @@ public class SimpleCompiler {
 		Optimizer optimizer = new Optimizer(parser);
 		optimizer.optimize();
 
-		if (args.length >= 2 && args[1].equals("-t")) {
-			Output.tree(optimizer.getAST());
-		}
+		if (showTree) Output.tree(optimizer.getAST());
 
 		String output = args[0].replaceAll("\\.([^.]*)$", ".out.c");
 
-		CodeGen.generateCode(output, optimizer.getAST());
+		CodeGen.generateCode(output, optimizer.getAST(), showCode);
 	}
 }
