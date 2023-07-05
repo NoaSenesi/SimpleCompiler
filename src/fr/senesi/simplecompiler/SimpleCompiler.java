@@ -10,6 +10,8 @@ import fr.senesi.simplecompiler.optimizing.Optimizer;
 import fr.senesi.simplecompiler.parsing.Parser;
 
 public class SimpleCompiler {
+	private static final boolean OPTIMIZE = false; // Debug purposes
+
 	public static void main(String[] args) {
 		if (args.length < 1) {
 			System.out.println("Usage: simple <file>");
@@ -29,7 +31,7 @@ public class SimpleCompiler {
 		if (parser.getAST() == null) return;
 
 		Optimizer optimizer = new Optimizer(parser);
-		optimizer.optimize();
+		if (OPTIMIZE) optimizer.optimize();
 
 		if (args.length >= 2 && args[1].equals("-t")) {
 			Output.tree(optimizer.getAST());

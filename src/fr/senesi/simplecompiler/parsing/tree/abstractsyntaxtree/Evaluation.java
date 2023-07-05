@@ -2,7 +2,7 @@ package fr.senesi.simplecompiler.parsing.tree.abstractsyntaxtree;
 
 import java.util.ArrayList;
 
-public class Evaluation extends Expression {
+public class Evaluation extends ASTTerminal {
 	private EvaluationType type;
 	private int intValue;
 	private double decimalValue;

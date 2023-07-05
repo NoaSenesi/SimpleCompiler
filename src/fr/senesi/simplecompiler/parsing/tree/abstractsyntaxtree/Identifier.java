@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Identifier extends Expression {
+public class Identifier extends ASTTerminal {
 	private String name;
 	private Evaluation value;
 
